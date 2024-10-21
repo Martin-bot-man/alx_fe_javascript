@@ -4,6 +4,9 @@ let quotes = [
 {text:"Life is what happens when you are busy making other plans",category:"life"},
 {text:"Make hay while the sun shines",category:"preparation"}
 ]
+if(localStorage.getItem("quotes")){
+    quotes=JSON.parse(localStorage.getItem("quotes"));
+}
 function showRandomQuote(){
     const randomQuoteIndex = Math.floor(Math.random()*quotes.length);
     // quotes = quotes[randomQuote]
@@ -14,6 +17,24 @@ function showRandomQuote(){
     <P><strong>Category:</strong>${selectedQuote.category}</P>`;
     // quoteDisplay.TextContent = `"${quotes.text}"-"${quotes.category}"`
 };
+
+//function to export quots as a JSON file
+function exportQuotesAsJSON(){
+    const quotesJSON = JSON.stringify(quotes,null ,2);//convert quotes array  to jsom format
+
+    //create a Blob object with the json data
+    const blob = new Blob([quotesJSON],{type:"application/json"})
+    //create a temporary url link to the blob
+    const link = document.createElement('a');
+    link.href =URL.createObjectURL(blob);
+    link.download ='quotes.json';//set the name of the downloaded file
+    //programmatically click the link to trigger the download
+    link.class();
+    //cleaning:Revoke the objectURL after the download
+    URL.revokeObjectURL(link.href);
+}
+//add eventlisteners to the buttons
+document.getElementById("exportJSON").addEventListener("click",exportQuotesAsJSON)
 //function to create a form for adding new quotes
 function createAddQuoteForm(){
     const formContainer = document.createElement("div");
@@ -41,7 +62,7 @@ form.addEventListener("submit",(e)=>{
        //add new quote to the array
        const newQuotation = {text:newQuoteText, category:newQuoteCategory};
        quotes.push(newQuotation);
-    
+    localStorage.setItem("quotes",JSON.stringify(quotes));
 
     //clear the form
     form.reset();
