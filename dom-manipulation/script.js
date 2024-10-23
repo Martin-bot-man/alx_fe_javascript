@@ -34,12 +34,9 @@ function exportQuotesAsJSON(){
   setTimeout(URL.revokeObjectURL(link.href),100)  ;
 }
 //add eventlisteners to the buttons
-const buttonA = document.createElement("button")
-buttonA.id="btnA"
-buttonA.textContent ="Export quotes";//set button quotes
+const buttonA = document.getElementById("buttonA")
 
 buttonA.addEventListener("click",exportQuotesAsJSON)
-document.body.appendChild(buttonA);
 
 //function to create a form for adding new quotes
 function createAddQuoteForm(){
