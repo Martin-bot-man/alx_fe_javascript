@@ -29,9 +29,9 @@ function exportQuotesAsJSON(){
     link.href =URL.createObjectURL(blob);
     link.download ='quotes.json';//set the name of the downloaded file
     //programmatically click the link to trigger the download
-    link.class();
+    link.click();
     //cleaning:Revoke the objectURL after the download
-    URL.revokeObjectURL(link.href);
+  setTimeout(URL.revokeObjectURL(link.href),100)  ;
 }
 //add eventlisteners to the buttons
 document.getElementById("exportJSON").addEventListener("click",exportQuotesAsJSON)
