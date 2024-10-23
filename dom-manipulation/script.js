@@ -5,7 +5,10 @@ let quotes = [
 {text:"Make hay while the sun shines",category:"preparation"}
 ]
 if(localStorage.getItem("quotes")){
-    quotes=JSON.parse(localStorage.getItem("quotes"))||[];
+    try{    quotes=JSON.parse(localStorage.getItem("quotes"))||[];
+}catch(error){
+console.error("Error loading quotes from localstorage",error)
+}
 }
 function showRandomQuote(){
     const randomQuoteIndex = Math.floor(Math.random()*quotes.length);
@@ -17,11 +20,7 @@ function showRandomQuote(){
     <P><strong>Category:</strong>${selectedQuote.category}</P>`;
     // quoteDisplay.TextContent = `"${quotes.text}"-"${quotes.category}"`
 };
-function displayQuotes(filteredQuotes){
-    filteredQuotes.forEach(quote =>{
-        
-    })
-}
+
 //function to export quotes as a JSON file
 function exportQuotesAsJSON(){
     const quotesJSON = JSON.stringify(quotes,null ,2);//convert quotes array  to json format
@@ -35,8 +34,8 @@ function exportQuotesAsJSON(){
     //programmatically click the link to trigger the download
     link.click();
     //cleaning:Revoke the objectURL after the download
-  setTimeout(URL.revokeObjectURL(link.href),100)  ;
-}
+  setTimeout(()=>{URL.revokeObjectURL(link.href)},100)  
+
 document.getElementById("importFile").addEventListener("change", (event)=>{
 const file = event.target.files[0];
 const reader = new FileReader();
@@ -98,6 +97,20 @@ form.addEventListener("submit",(e)=>{
     //Display the newly added quote
     showRandomQuote();
 })
+
+}
+//function to filter and display quotes by category
+function displayQuotes(filteredQuotes){
+    const quoteList = document.getElementById("quoteList");
+    quoteList.innerHTML = "";//clear previous quotes
+    filteredQuotes.forEach(quote =>{
+        const quoteItem = document.createElement("div");
+        quoteItem.innerHTML = `
+        <p>"${quote.text}"</p>
+        <p><strong>Category: </strong> ${quote.category}</p>
+        `;
+        quoteList.appendChild(quoteItem);
+    })
 
 }
 //Initialize the page with a random quote and the form
