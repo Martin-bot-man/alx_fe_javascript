@@ -18,7 +18,7 @@ function showRandomQuote(){
     // quoteDisplay.TextContent = `"${quotes.text}"-"${quotes.category}"`
 };
 
-//function to export quots as a JSON file
+//function to export quotes as a JSON file
 function exportQuotesAsJSON(){
     const quotesJSON = JSON.stringify(quotes,null ,2);//convert quotes array  to jsom format
 
@@ -33,6 +33,26 @@ function exportQuotesAsJSON(){
     //cleaning:Revoke the objectURL after the download
   setTimeout(URL.revokeObjectURL(link.href),100)  ;
 }
+document.getElemenyById("importFile").addEventListener("change", (event)=>{
+const file = event.target.files[0];
+const reader = new FileReader();
+reader.onload = function(e){
+    try{
+        const importedQuotes = JSON.parse(e.target.result);
+        if(Array.isArray(importedQuotes)){
+            quotes= quotes.concat(importedQuotes);
+            localStorage.setItem('quotes',JSON.stringify(quotes));
+            alert("quotes imported successfully!");
+            showRandomQuote();
+        }else{
+            alert('Invalid file format! Please upload a valid JSON file')
+        }
+        }catch(error){
+            alert("Error reading file:" + error.message );
+    }
+}
+reader.readAsText(file);
+})
 //add eventlisteners to the buttons
 const buttonA = document.getElementById("buttonA")
 
