@@ -10,6 +10,23 @@ if(localStorage.getItem("quotes")){
 console.error("Error loading quotes from localstorage",error)
 }
 }
+function populateCategories() {
+    const categoryFilter = document.getElementById("categoryFilter");
+
+    // Get unique categories from the quotes
+    const categories = ["all", ...new Set(quotes.map(quote => quote.category))];
+
+    // Clear existing options
+    categoryFilter.innerHTML = "";
+
+    // Populate the dropdown with categories
+    categories.forEach(category => {
+        const option = document.createElement("option");
+        option.value = category;
+        option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+        categoryFilter.appendChild(option);
+    });
+}
 function showRandomQuote(){
     const randomQuoteIndex = Math.floor(Math.random()*quotes.length);
     // quotes = quotes[randomQuote]
@@ -35,7 +52,7 @@ function exportQuotesAsJSON(){
     link.click();
     //cleaning:Revoke the objectURL after the download
   setTimeout(()=>{URL.revokeObjectURL(link.href)},100)  
-
+}
 document.getElementById("importFile").addEventListener("change", (event)=>{
 const file = event.target.files[0];
 const reader = new FileReader();
