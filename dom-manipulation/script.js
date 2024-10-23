@@ -36,7 +36,9 @@ function exportQuotesAsJSON(){
 //add eventlisteners to the buttons
 document.createElement("button")
 button.id="btnA"
-body.appendChild('button')
+button.textContent ="Export quotes";//set button quotes
+
+button.body.appendChild("button")
 document.getElementById("btnA").addEventListener("click",exportQuotesAsJSON)
 
 //function to create a form for adding new quotes
