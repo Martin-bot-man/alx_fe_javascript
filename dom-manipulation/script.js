@@ -17,10 +17,14 @@ function showRandomQuote(){
     <P><strong>Category:</strong>${selectedQuote.category}</P>`;
     // quoteDisplay.TextContent = `"${quotes.text}"-"${quotes.category}"`
 };
-
+function displayQuotes(filteredQuotes){
+    filteredQuotes.forEach(quote =>{
+        
+    })
+}
 //function to export quotes as a JSON file
 function exportQuotesAsJSON(){
-    const quotesJSON = JSON.stringify(quotes,null ,2);//convert quotes array  to jsom format
+    const quotesJSON = JSON.stringify(quotes,null ,2);//convert quotes array  to json format
 
     //create a Blob object with the json data
     const blob = new Blob([quotesJSON],{type:"application/json"})
@@ -33,7 +37,7 @@ function exportQuotesAsJSON(){
     //cleaning:Revoke the objectURL after the download
   setTimeout(URL.revokeObjectURL(link.href),100)  ;
 }
-document.getElemenyById("importFile").addEventListener("change", (event)=>{
+document.getElementById("importFile").addEventListener("change", (event)=>{
 const file = event.target.files[0];
 const reader = new FileReader();
 reader.onload = function(e){
