@@ -5,7 +5,7 @@ let quotes = [
 {text:"Make hay while the sun shines",category:"preparation"}
 ]
 if(localStorage.getItem("quotes")){
-    quotes=JSON.parse(localStorage.getItem("quotes"));
+    quotes=JSON.parse(localStorage.getItem("quotes"))||[];
 }
 function showRandomQuote(){
     const randomQuoteIndex = Math.floor(Math.random()*quotes.length);
@@ -34,12 +34,12 @@ function exportQuotesAsJSON(){
   setTimeout(URL.revokeObjectURL(link.href),100)  ;
 }
 //add eventlisteners to the buttons
-const button =document.createElement("button")
-button.id="btnA"
-button.textContent ="Export quotes";//set button quotes
+const buttonA = document.createElement("button")
+buttonA.id="btnA"
+buttonA.textContent ="Export quotes";//set button quotes
 
-button.body.appendChild("button")
-document.getElementById("btnA").addEventListener("click",exportQuotesAsJSON)
+buttonA.addEventListener("click",exportQuotesAsJSON)
+document.body.appendChild(buttonA);
 
 //function to create a form for adding new quotes
 function createAddQuoteForm(){
