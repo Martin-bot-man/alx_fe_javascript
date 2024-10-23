@@ -34,7 +34,7 @@ function exportQuotesAsJSON(){
   setTimeout(URL.revokeObjectURL(link.href),100)  ;
 }
 //add eventlisteners to the buttons
-document.createElement("button")
+const button =document.createElement("button")
 button.id="btnA"
 button.textContent ="Export quotes";//set button quotes
 
