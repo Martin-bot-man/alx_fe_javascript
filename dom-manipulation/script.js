@@ -1,4 +1,4 @@
-const quotes = [
+let quotes = [
 {text:"make hay while the sun shines", category: "Inspiration"},
 {text:"You must be the change you wish to see in the word",category:"Inspiration"},
 {text:"All men have equal political rights", category:"History"},
@@ -18,7 +18,7 @@ function showRandomQuote(){
    const selectedQuote = quotes[RandomquotesIndex];
    quotesDisplay.innerHTML =`<P>"${selectedQuote.text}"</p>
                              <p>"${selectedQuote.category}"</p>`
-   console.log(selectedQuote);
+//    console.log(selectedQuote);
 };
 //function to export quote as a JSON file
 function exportQuotesAsJSON(){
@@ -88,7 +88,38 @@ function addQuote(event){
     alert("New quote added successfully!")
     showRandomQuote();//optionally show the new quote after adding
 }
+function filteringCategoriesHtml(){
+    const filterContainer = document.createElement("div");
+    filterContainer.innerHTML =`
+       <select id="categoryFilter" onchange="filterQuotes()">
+          <option value="All" >All Categories</option>
+          <option value="Life">Life</option>
+          <option value="Inspiration">Inspiration</option>
+          <option value="History">History</option>
+
+       </select>   
+    
+    `
+    document.body.appendChild(filterContainer);
+}
+function filterQuotes(){
+    const selectedCategory = document.getElementById("categoryFilter");
+    let filteredQuotes = quotes;
+    if(selectedCategory!=="All"){
+        filteredQuotes= quotes.filter(quote=>quote.category === selectedCategory);
+    };
+    //clear the display area
+    quotesDisplay.innerHTML ="";
+filteredQuotes.forEach(quote=>{
+    quotesDisplay.innerHTML +=`
+    <p>"${quote.text}"</p>
+    <p>Category:${quote.category}</p>
+    `
+})
+
+
+}
 //call the function to create the form container and the form dynamically when the page loads
 window.onload =()=>{createFormContainerAndForm();
-    createExportButton()
+    createExportButton();
 } 
