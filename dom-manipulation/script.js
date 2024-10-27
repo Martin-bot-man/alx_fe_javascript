@@ -155,7 +155,7 @@ window.addEventListener("load", fetchQuotesFromServer);
 
 // Periodically sync with server every 10 minutes
 setInterval(fetchQuotesFromServer, 10 * 60 * 1000);
-(syncQuotes)
+(syncQuotes)Quotes synced with server!
 // Event Listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 window.addEventListener("load", () => {
