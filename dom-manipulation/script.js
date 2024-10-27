@@ -105,6 +105,53 @@ async function fetchQuotesFromServer() {
         console.error("Failed to sync with server:", error);
     }
 }
+async function addQuoteToServer(newQuote) {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title: newQuote.text,
+                body: newQuote.category,
+                userId: 1
+            })
+        });
+
+        if (response.ok) {
+            const serverQuote = await response.json();
+            console.log("Quote added to server:", serverQuote);
+        }
+    } catch (error) {
+        console.error("Failed to add quote to server:", error);
+    }
+}
+
+// Modify addQuote function to sync new quotes with the server
+function addQuote() {
+    const text = document.getElementById("newQuoteText").value;
+    const category = document.getElementById("newQuoteCategory").value;
+    if (!text || !category) return alert("Both text and category are required.");
+
+    const newQuote = { text, category };
+    quotes.push(newQuote);
+    saveQuotes();
+    populateCategories();
+    filterQuotes();
+
+    // Sync the new quote with the server
+    addQuoteToServer(newQuote);
+}
+
+// Save the quotes array to local storage
+function saveQuotes() {
+    localStorage.setItem("quotes", JSON.stringify(quotes));
+}
+
+// Fetch quotes from the server every 10 minutes
+setInterval(fetchQuotesFromServer, 10 * 60 * 1000);
+
+// Initial fetch to load any server updates when the app starts
+window.addEventListener("load", fetchQuotesFromServer);
 
 // Periodically sync with server every 10 minutes
 setInterval(fetchQuotesFromServer, 10 * 60 * 1000);
