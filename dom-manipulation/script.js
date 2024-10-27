@@ -103,22 +103,29 @@ function filteringCategoriesHtml(){
     document.body.appendChild(filterContainer);
 }
 function filterQuotes(){
+    //to get the selected category from the dropdown
     const selectedCategory = document.getElementById("categoryFilter");
-    let filteredQuotes = quotes;
-    if(selectedCategory!=="All"){
-        filteredQuotes= quotes.filter(quote=>quote.category === selectedCategory);
-    };
-    //clear the display area
-    quotesDisplay.innerHTML ="";
-filteredQuotes.forEach(quote=>{
-    quotesDisplay.innerHTML +=`
-    <p>"${quote.text}"</p>
-    <p>Category:${quote.category}</p>
-    `
-})
+    const categoryselected = selectedCategory.value;
+    //save the selected category to the dropdown
+    localStorage.setItem("categorySelected", selectedCategory);
+    //filter quotes based on the selected categotry
 
+    const filterQuotes = categoryselected ==="all"?quotes:quotes.filter(quote=>quote.category===categoryselected);
 
+    //Display filtered quotes
+    const quoteDisplay = document.getElementById("quoteDisplay");
+    quoteDisplay.innerHTML ="";//clear previous quotes
+
+    filterQuotes.forEach(quote=>{
+        const quoteElement= document.createElement("p");
+        quoteElement.textContent = quote.text;
+        quoteDisplay.appendChild(quoteElement)
+    })
+ 
 }
+
+
+filterQuotes()
 //call the function to create the form container and the form dynamically when the page loads
 window.onload =()=>{createFormContainerAndForm();
     createExportButton();
