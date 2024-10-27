@@ -91,7 +91,7 @@ function restoreLastSelectedCategory() {
 }
 
 // Simulate syncing data with a server
-async function syncWithServer() {
+async function fetchQuotesFromServer() {
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/posts'); // Example API
         const serverQuotes = await response.json();
@@ -107,7 +107,7 @@ async function syncWithServer() {
 }
 
 // Periodically sync with server every 10 minutes
-setInterval(syncWithServer, 10 * 60 * 1000);
+setInterval(fetchQuotesFromServer, 10 * 60 * 1000);
 
 // Event Listeners
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
